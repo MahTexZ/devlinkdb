@@ -13,7 +13,7 @@ const multer = require("multer");
 // const AppErr = require('../utils/appErr'); // Adjust the path as needed
 
 const userRegisterCtrl = async (req, res, next) => {
-  const { email, password, confirmPassword } = req.body;
+  const { email, password, confirmPassword,firstname, lastname } = req.body;
 
   try {
     // Check if email is provided

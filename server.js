@@ -18,11 +18,11 @@ app.use(cors()); // Enable CORS for all routes
 
 app.get("/", async(req, res)=>{
   try {
-    const posts = await 
+    const users = await 
     Form.find();
     res.json({
       status: "success",
-      data: posts,
+      data: users,
     })
   } catch (error) {
     res.json(error);
@@ -35,7 +35,7 @@ app.use("/api/v1/users/", userRouter);
 
 app.use("/api/v1", formRouter);
 
-
+// app.use("/api/v1", formRouter);
 
 //Error handlers middleware
 app.use(globalErrHandler);

@@ -11,11 +11,24 @@ const isAdmin = require("../../middlewares/isAdmin");
 const isLogin = require("../../middlewares/isLogin");
 const userRouter = express.Router();
 
+const storage = require("../../config/cloudinary");
+const multer = require("multer");
+// const userRouter = express.Router();
+//instance of multer
+const upload = multer({ storage });
+
 //POST/api/v1/users/register
 userRouter.post("/register", userRegisterCtrl);
 
 //POST/api/v1/users/login
 userRouter.post("/login", userLoginCtrl);
+
+userRouter.post(
+  "/profile-photo-upload",
+  isLogin,
+  upload.single("profile"),
+  profilePhotoUploadCtrl
+);
 
 //PUT/api/v1/users/updatePassword
 userRouter.put("/updatePassword", updatePasswordCtrl);
