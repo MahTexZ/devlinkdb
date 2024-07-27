@@ -209,28 +209,35 @@ const userProfileCtrl = async (req, res, next) => {
 const updateUserCtrl = async (req, res, next) => {
   const { email, lastname, firstname } = req.body;
   try {
-    //Check if email is not taken
-    if (email) {
+    // Find the current user
+    const currentUser = await User.findById(req.userAuth);
+    if (!currentUser) {
+      return next(appErr("User not found", 404));
+    }
+
+    // Check if the new email is already taken by another user
+    if (email && email !== currentUser.email) {
       const emailTaken = await User.findOne({ email });
       if (emailTaken) {
         return next(appErr("Email is taken", 400));
       }
     }
 
-    //update the user
+    // Update the user
     const user = await User.findByIdAndUpdate(
       req.userAuth,
       {
         lastname,
         firstname,
-        email,
+        email: email || currentUser.email, // Retain current email if not updated
       },
       {
         new: true,
         runValidators: true,
       }
     );
-    //send response
+
+    // Send response
     res.json({
       status: "success",
       data: user,

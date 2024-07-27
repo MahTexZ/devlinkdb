@@ -8,6 +8,7 @@ const {
   profilePhotoUploadCtrl,
   usersCtrl,
   userProfileCtrl,
+  updateUserCtrl,
 } = require("../../controllers/users/userCtrl");
 const isAdmin = require("../../middlewares/isAdmin");
 const isLogin = require("../../middlewares/isLogin");
@@ -21,6 +22,8 @@ const upload = multer({ storage });
 
 //POST/api/v1/users/register
 userRouter.post("/register", userRegisterCtrl);
+
+userRouter.patch('/update', isLogin, updateUserCtrl);
 
 //Get all users
 userRouter.get("/", usersCtrl);

@@ -33,6 +33,8 @@ app.get("/", async(req, res)=>{
 //users route
 app.use("/api/v1/users/", userRouter);
 
+app.use("/api/v1/users/update", userRouter);
+
 
 app.use("/api/v1", formRouter);
 
